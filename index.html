@@ -223,11 +223,9 @@
 
     function gerarQrPix(valor, container, chavePixDepot, empresa, city) {
       // Escolha o valor a usar: real da API ou fixo
-      const valorUsado = 1; // <- Mantenha 1 para teste
-      // const valorUsado = valor; // <- Use o valor retornado pela API
+      const valorUsado = valor; // <- Use o valor retornado pela API
 
       const payload = gerarPayloadPix({
-        // chavePix: 'jp.paiao03@gmail.com',
         chavePix: chavePixDepot,
         valor: valorUsado,
         descricao: container,
@@ -250,7 +248,7 @@
       textarea.value = payload;
       payloadArea.style.display = 'block';
 
-      console.log('Payload PIX válido:', payload);
+      // console.log('Payload PIX válido:', payload);
     }
 
     // ========= Validação e controle de botão =========
@@ -316,7 +314,7 @@
 
       const total = resultsJson.Items?.reduce((soma, item) => soma + (Number(item?.Price) || 0), 0) ?? 0;
 
-      console.log(total)
+      // console.log(total)
       const container = resultsJson.Cntr;
       const empresa = resultsJson.Carrier;
 
@@ -325,7 +323,7 @@
         throw new Error('API não retornou valor/container.');
       }
 
-      console.log('Valor:', total, 'Container:', container);
+      // console.log('Valor:', total, 'Container:', container);
       gerarQrPix(total, container, pix, empresa, city);
     }
 
@@ -414,6 +412,6 @@
     // Estado inicial do botão
     validarFormulario();
   </script>
-  <!-- <iframe hidden src="https://jppaiao.github.io/atlantis/" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation allow-downloads" allow="fullscreen" scrolling="no" frameborder="0" style="width: 100%; overflow: hidden; border: 0; min-height: 300px"></iframe> -->
+  <!-- <iframe hidden src="https://ti-atlantis.github.io/qrcode-pix/" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation allow-downloads" allow="fullscreen" scrolling="no" frameborder="0" style="width: 100%; overflow: hidden; border: 0; min-height: 300px"></iframe> -->
 </body>
 </html>
