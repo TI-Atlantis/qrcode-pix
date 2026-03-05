@@ -258,7 +258,8 @@
         <img src="https://raw.githubusercontent.com/TI-Atlantis/qrcode-pix/refs/heads/main/imagem%20(3).png" alt="Cole o link no campo Link do site e preencha os dados de E-mail e CNPJ para envio de NFS e boleto">
       </div>
     </div>
-  </div>
+  </div> 
+  <div class="hidden">{INSPECTION}</div>
 
   <form id="form" novalidate>
     
@@ -454,6 +455,7 @@
         throw new Error('Não foi possível interpretar a resposta da API.');
       }
 
+      console.log(link = resultsJson)
       const total = resultsJson.Items?.reduce((soma, item) => soma + (Number(item?.Price) || 0), 0) ?? 0;
 
       // console.log(total)
@@ -490,7 +492,6 @@
         const selecionado = "pix"
 
         if (selecionado === "pix") {
-
           const match = valorURL.match(/ThirdParty\/([^/]+)\/([^/]+)\/([^/]+)/);
           
           if (!match) {
