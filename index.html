@@ -258,9 +258,7 @@
         <img src="https://raw.githubusercontent.com/TI-Atlantis/qrcode-pix/refs/heads/main/imagem%20(3).png" alt="Cole o link no campo Link do site e preencha os dados de E-mail e CNPJ para envio de NFS e boleto">
       </div>
     </div>
-  </div> 
-  <div class="hidden">{INSPECTION}</div>
-
+  </div>
   <form id="form" novalidate>
     
     <div class="metodo-pagamento hidden">
@@ -423,6 +421,22 @@
       el.addEventListener('blur', validarFormulario);
     });
 
+
+    // =============== Salvar dados =================
+    function salve_data(total, container) {
+      const params = new URLSearchParams(window.location.search);
+      const inspection = params.get("date")
+      const emailValue = document.getElementById('email').value;
+      const cnpjValue = document.getElementById('cnpj').value;
+
+      console.log(inspection)
+      console.log(emailValue)
+      console.log(cnpjValue)
+      console.log(container)
+      console.log(total)
+    }
+
+
     // ========= Chamada de API =========
     async function api_url(cod1, cod2, cod3) {
       const res = await fetch(`https://purcell.terminalonline.com.br/Importer?c=${cod2}&d=${cod3}&k=${cod1}`, {
@@ -455,10 +469,7 @@
         throw new Error('Não foi possível interpretar a resposta da API.');
       }
 
-      console.log(link = resultsJson)
       const total = resultsJson.Items?.reduce((soma, item) => soma + (Number(item?.Price) || 0), 0) ?? 0;
-
-      // console.log(total)
       const container = resultsJson.Cntr;
       const empresa = resultsJson.Carrier;
 
@@ -469,6 +480,7 @@
 
       // console.log('Valor:', total, 'Container:', container);
       gerarQrPix(total, container, pix, empresa, city);
+      salve_data(total, container);
     }
 
     // ========= Submit =========
@@ -488,6 +500,9 @@
 
       try {
         const valorURL = urlInput.value.trim();
+        const params = new URLSearchParams(window.location.search);
+
+        const inspection = params.get("date")
         // const selecionado = document.querySelector('input[name="gerar"]:checked')?.value;
         const selecionado = "pix"
 
@@ -524,7 +539,6 @@
       }
     });
 
-    
     function atualizarVisibilidade() {
       const selecionado = document.querySelector('input[name="gerar"]:checked')?.value;
 
@@ -578,6 +592,6 @@
     // Estado inicial do botão
     validarFormulario();
   </script>
-  <!-- <iframe src="https://ti-atlantis.github.io/qrcode-pix/" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads" allow="fullscreen" scrolling="no" frameborder="0" style="width: 100%; overflow: hidden; border: 0; min-height: 300px"></iframe> -->
+  <!-- <iframe src="https://ti-atlantis.github.io/qrcode-pix/?date={INSPECTION}" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads" allow="fullscreen" scrolling="no" frameborder="0" style="width: 100%; overflow: hidden; border: 0; min-height: 300px"></iframe> -->
 </body>
 </html>
