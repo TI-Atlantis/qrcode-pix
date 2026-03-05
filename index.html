@@ -462,8 +462,12 @@
       const cods = await res.json();
 
       let resultsJson;
+
+
       try {
         resultsJson = JSON.parse(cods.results);
+
+        console.log(resultsJson)
       } catch (e) {
         console.error('Erro ao parsear results:', cods.results);
         throw new Error('Não foi possível interpretar a resposta da API.');
